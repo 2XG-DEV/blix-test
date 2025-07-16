@@ -19,10 +19,12 @@ export const AssistantSheet = () => {
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      index={0}
+      index={2}
       snapPoints={snapPoints}
-      keyboardBehavior="interactive"
+      enableDynamicSizing={true}
+      keyboardBehavior="extend"
       keyboardBlurBehavior="restore"
+      android_keyboardInputMode="adjustResize"
       handleComponent={CustomHandle}
       backgroundStyle={{
         backgroundColor: "#f8f8f8",
@@ -40,7 +42,7 @@ export const AssistantSheet = () => {
         borderTopColor: "#e0e0e0",
       }}
     >
-      <BottomSheetView style={{ flex: 1 }}>
+      <BottomSheetView style={{ flex: 1, paddingBottom: 0 }}>
         <MessageList />
         <ChatInput />
       </BottomSheetView>

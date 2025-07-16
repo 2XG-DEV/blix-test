@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 
 import "../global.css";
@@ -21,8 +22,10 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }} />
+        <SafeAreaView style={{ flex: 1 }}>
+          <StatusBar style="auto" />
+          <Stack screenOptions={{ headerShown: false }} />
+        </SafeAreaView>
       </GestureHandlerRootView>
     </Provider>
   );

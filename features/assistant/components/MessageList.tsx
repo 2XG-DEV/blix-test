@@ -1,6 +1,6 @@
+import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { FlashList } from "@shopify/flash-list";
 import React, { useEffect, useRef } from "react";
-import { View } from "react-native";
 import { useSelector } from "react-redux";
 import { LoadingIndicator } from "../../../components/LoadingIndicator";
 import { RootState } from "../../../store/store";
@@ -19,16 +19,12 @@ export const MessageList = () => {
   }, [messages]);
 
   return (
-    <View className="flex-1">
-      <FlashList
-        ref={listRef}
-        data={messages}
-        renderItem={({ item }) => <MessageItem message={item} />}
-        estimatedItemSize={80}
-        keyExtractor={(item) => item.id}
-        ListFooterComponent={status === "loading" ? <LoadingIndicator /> : null}
-        contentContainerClassName="p-4"
-      />
-    </View>
+    <BottomSheetFlatList
+      data={messages}
+      renderItem={({ item }) => <MessageItem message={item} />}
+      keyExtractor={(item) => item.id}
+      ListFooterComponent={status === "loading" ? <LoadingIndicator /> : null}
+      contentContainerClassName="p-4"
+    />
   );
 };
