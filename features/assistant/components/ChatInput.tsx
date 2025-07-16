@@ -33,7 +33,7 @@ export const ChatInput = () => {
           value={text}
           onChangeText={setText}
           placeholder="Ask Blix..."
-          className="flex-1 h-10 px-3 text-base"
+          className="flex-1 px-3 text-base"
           onSubmitEditing={handleSendMessage}
           editable={!isLoading}
         />
@@ -46,7 +46,6 @@ export const ChatInput = () => {
                 isLoading ? "bg-gray-400" : "bg-blue-600"
               }`}
             >
-              {/* Replace with a proper Send icon if available */}
               <Text className="text-white text-lg font-bold">↑</Text>
             </Pressable>
           </Animated.View>

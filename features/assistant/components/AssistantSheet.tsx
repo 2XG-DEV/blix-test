@@ -1,11 +1,9 @@
-// features/assistant/components/AssistantSheet.tsx
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { useMemo, useRef } from "react";
 import { View } from "react-native";
 import { ChatInput } from "./ChatInput";
 import { MessageList } from "./MessageList";
 
-// A custom handle for the bottom sheet
 const CustomHandle = () => (
   <View className="items-center p-2">
     <View className="w-10 h-1 bg-gray-300 rounded-full" />
@@ -14,12 +12,12 @@ const CustomHandle = () => (
 
 export const AssistantSheet = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["5%", "50%", "90%"], []);
+  const snapPoints = useMemo(() => ["5%", "90%"], []);
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      index={2}
+      index={1}
       snapPoints={snapPoints}
       enableDynamicSizing={true}
       keyboardBehavior="extend"
@@ -42,7 +40,7 @@ export const AssistantSheet = () => {
         borderTopColor: "#e0e0e0",
       }}
     >
-      <BottomSheetView style={{ flex: 1, paddingBottom: 0 }}>
+      <BottomSheetView className="flex-1 pb-0">
         <MessageList />
         <ChatInput />
       </BottomSheetView>

@@ -1,4 +1,3 @@
-// features/assistant/state/assistantSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAssistantResponse } from "../api/assistantAPI";
 import { Message } from "../types";
@@ -13,7 +12,6 @@ const initialState: AssistantState = {
   status: "idle",
 };
 
-// The thunk for handling the async request
 export const submitQuestion = createAsyncThunk(
   "assistant/submitQuestion",
   async (questionText: string) => {
@@ -26,7 +24,6 @@ const assistantSlice = createSlice({
   name: "assistant",
   initialState,
   reducers: {
-    // Action to add the user's message immediately
     addUserMessage: (state, action: PayloadAction<Message>) => {
       state.messages.push(action.payload);
     },

@@ -1,15 +1,23 @@
 import React from "react";
 import { Text, View } from "react-native";
 import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import { Message } from "../types";
 import { FollowUpButton } from "./FollowUpButton";
 
 interface MessageItemProps {
   message: Message;
+  isLastMessage: boolean;
 }
 
-export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
+export const MessageItem: React.FC<MessageItemProps> = ({
+  message,
+  isLastMessage,
+}) => {
   const isUser = message.sender === "user";
+  const status = useSelector((state: RootState) => state.assistant.status);
+  const isLoading = status === "loading";
 
   return (
     <Animated.View
@@ -26,7 +34,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
           {message.text}
         </Text>
       </View>
-      {message.followUpQuestions && (
+      {isLastMessage && !isUser && !isLoading && message.followUpQuestions && (
         <View
           className={`flex-row flex-wrap mt-2 ${
             isUser ? "justify-end" : "justify-start"

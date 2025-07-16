@@ -21,7 +21,12 @@ export const MessageList = () => {
   return (
     <BottomSheetFlatList
       data={messages}
-      renderItem={({ item }) => <MessageItem message={item} />}
+      renderItem={({ item, index }) => (
+        <MessageItem
+          message={item}
+          isLastMessage={index === messages.length - 1}
+        />
+      )}
       keyExtractor={(item) => item.id}
       ListFooterComponent={status === "loading" ? <LoadingIndicator /> : null}
       contentContainerClassName="p-4"
