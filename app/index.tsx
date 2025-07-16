@@ -1,11 +1,17 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Provider } from "react-redux";
+import { AssistantSheet } from "../features/assistant/components/AssistantSheet";
+import { store } from "../store/store";
 
-export default function TabTwoScreen() {
+export default function Index() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-xl font-bold text-red-500">
-        Welcome to Nativewind!
-      </Text>
-    </View>
+    <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <View className="flex-1 bg-white">
+          <AssistantSheet />
+        </View>
+      </GestureHandlerRootView>
+    </Provider>
   );
 }
