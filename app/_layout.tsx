@@ -3,8 +3,10 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
+import { Provider } from "react-redux";
 
 import "../global.css";
+import { store } from "../store/store";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -17,9 +19,11 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar style="auto" />
-      <Stack />
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }} />
+      </GestureHandlerRootView>
+    </Provider>
   );
 }

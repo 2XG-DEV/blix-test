@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
+import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
 import { Message } from "../types";
 import { FollowUpButton } from "./FollowUpButton";
 
@@ -11,23 +12,31 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
   const isUser = message.sender === "user";
 
   return (
-    <View className={`flex-col mb-4 ${isUser ? "items-end" : "items-start"}`}>
+    <Animated.View
+      entering={FadeInUp}
+      exiting={FadeOutDown}
+      className={`flex-col mb-4 px-4 ${isUser ? "items-end" : "items-start"}`}
+    >
       <View
-        className={`p-3 rounded-lg max-w-[80%] ${
-          isUser ? "bg-blue-500" : "bg-gray-200"
+        className={`p-3 rounded-2xl max-w-[85%] ${
+          isUser ? "bg-blue-600 rounded-br-none" : "bg-gray-200 rounded-bl-none"
         }`}
       >
-        <Text className={isUser ? "text-white" : "text-black"}>
+        <Text className={`text-base ${isUser ? "text-white" : "text-black"}`}>
           {message.text}
         </Text>
       </View>
       {message.followUpQuestions && (
-        <View className="flex-row flex-wrap mt-2">
+        <View
+          className={`flex-row flex-wrap mt-2 ${
+            isUser ? "justify-end" : "justify-start"
+          }`}
+        >
           {message.followUpQuestions.map((q) => (
             <FollowUpButton key={q} question={q} />
           ))}
         </View>
       )}
-    </View>
+    </Animated.View>
   );
 };

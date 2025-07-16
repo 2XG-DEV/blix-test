@@ -1,5 +1,10 @@
 import React from "react";
 import { Pressable, Text } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 import { addUserMessage, submitQuestion } from "../state/assistantSlice";
@@ -8,8 +13,11 @@ interface FollowUpButtonProps {
   question: string;
 }
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 export const FollowUpButton: React.FC<FollowUpButtonProps> = ({ question }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const scale = useSharedValue(1);
 
   const handlePress = () => {
     const userMessage = {
@@ -21,12 +29,21 @@ export const FollowUpButton: React.FC<FollowUpButtonProps> = ({ question }) => {
     dispatch(submitQuestion(question));
   };
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={handlePress}
-      className="bg-blue-100 rounded-full px-4 py-2 mt-2 mr-2"
+      onPressIn={() => (scale.value = withSpring(0.95))}
+      onPressOut={() => (scale.value = withSpring(1))}
+      style={animatedStyle}
+      className="bg-gray-100 border border-gray-300 rounded-full px-3 py-2 mt-2 ml-2"
     >
-      <Text className="text-blue-800">{question}</Text>
-    </Pressable>
+      <Text className="text-gray-800 font-medium">{question}</Text>
+    </AnimatedPressable>
   );
 };

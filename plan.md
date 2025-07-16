@@ -22,32 +22,37 @@ Gesture Handling: react-native-gesture-handler
 
 Animation: react-native-reanimated
 
-3. Enforced Project Structure
-   The project must adhere to the following feature-based directory structure. All new files must be created in their designated locations.
+3. Project Structure
+   The project adheres to the following feature-based directory structure.
 
-src/
+.
 ├── app/
-│ ├── store.ts # Redux store configuration
-│ └── App.tsx # Root component, Redux Provider, Gesture Handler Provider
-│
-└── features/
-└── assistant/
-├── api/
-│ └── assistantAPI.ts # Simulated API logic
+│ ├── index.tsx # Main screen, renders the Assistant
+│ └── \_layout.tsx # Root layout for the app
 │
 ├── components/
-│ ├── AssistantSheet.tsx # Main bottom sheet component
-│ ├── MessageList.tsx # Scrollable list of messages
-│ ├── MessageItem.tsx # Individual message bubble (user or assistant)
-│ ├── ChatInput.tsx # Fixed text input area at the bottom
-│ ├── LoadingIndicator.tsx# Spinning/pulsing animation for loading state
-│ └── FollowUpButton.tsx # Buttons for follow-up questions
+│ └── LoadingIndicator.tsx # Generic loading indicator
 │
-├── state/
-│ └── assistantSlice.ts # Redux slice for the assistant feature
+├── features/
+│ └── assistant/
+│ ├── api/
+│ │ └── assistantAPI.ts # Simulated API logic
+│ │
+│ ├── components/
+│ │ ├── AssistantSheet.tsx # Main bottom sheet component
+│ │ ├── MessageList.tsx # Scrollable list of messages
+│ │ ├── MessageItem.tsx # Individual message bubble
+│ │ ├── ChatInput.tsx # Fixed text input area
+│ │ └── FollowUpButton.tsx # Buttons for follow-up questions
+│ │
+│ ├── state/
+│ │ └── assistantSlice.ts # Redux slice for the assistant
+│ │
+│ └── types/
+│ └── index.ts # All TypeScript type definitions
 │
-└── types/
-└── index.ts # All TypeScript type definitions
+└── store/
+└── store.ts # Redux store configuration
 
 4. Step-by-Step Implementation Guide
    Step 1: Define Types (features/assistant/types/index.ts)
@@ -102,7 +107,7 @@ Handle submitQuestion.pending: Set state.status = 'loading'.
 
 Handle submitQuestion.fulfilled: Set state.status = 'succeeded' and push the action.payload (the assistant's message) into the state.messages array.
 
-Step 4: Build UI Components (features/assistant/components/)
+Step 4: Build UI Components (features/assistant/components/ and components/)
 AssistantSheet.tsx
 
 This is the main container.
@@ -167,12 +172,12 @@ A simple TouchableOpacity with text.
 
 When pressed, it should trigger the same submission logic as the ChatInput (dispatch addUserMessage and submitQuestion).
 
-LoadingIndicator.tsx
+LoadingIndicator.tsx (components/LoadingIndicator.tsx)
 
 A simple, visually appealing loading animation. Can be a ActivityIndicator or a custom-animated view (e.g., pulsing dots).
 
-Step 5: Assemble the App (app/store.ts and app/App.tsx)
-app/store.ts
+Step 5: Assemble the App (store/store.ts and app/index.tsx)
+store/store.ts
 
 Configure the Redux store using configureStore.
 
@@ -180,9 +185,9 @@ Combine reducers, including assistant: assistantReducer.
 
 Export RootState and AppDispatch types for use throughout the app.
 
-app/App.tsx
+app/index.tsx
 
-Wrap the entire application in GestureHandlerRootView (from react-native-gesture-handler).
+Wrap the entire application in GestureHandlerRootView (from react-native-gesture-handler) inside `app/_layout.tsx`.
 
 Wrap the app in the Redux Provider, passing the configured store.
 
